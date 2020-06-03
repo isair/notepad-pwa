@@ -1,4 +1,4 @@
-var scopes = require('./commitlint.scopes');
+const scopes = require('./commitlint.scopes');
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],

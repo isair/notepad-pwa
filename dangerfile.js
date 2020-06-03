@@ -1,15 +1,15 @@
-var dangerImports = require('danger');
-var scopes = require('./commitlint.scopes');
+const dangerImports = require('danger');
+const scopes = require('./commitlint.scopes');
 
-var titlePattern = /^(\w+)\(([a-z-]+)\): (.+)$/;
-var branchPattern = /(?:(feature|hotfix)\/([A-Za-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
+const titlePattern = /^(\w+)\(([a-z-]+)\): (.+)$/;
+const branchPattern = /(?:(feature|hotfix)\/([A-Za-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
 
-var danger = dangerImports.danger;
-var fail = dangerImports.fail;
-var warn = dangerImports.warn;
+const danger = dangerImports.danger;
+const fail = dangerImports.fail;
+const warn = dangerImports.warn;
 
-var pr = danger.github.pr;
-var isBotPr = pr.user.type === 'Bot';
+const pr = danger.github.pr;
+const isBotPr = pr.user.type === 'Bot';
 
 /**
  * Rules
@@ -29,12 +29,12 @@ if (!isBotPr) {
       'The PR title needs to be in format: `type(scope): TICKET-1234 Description`. You can replace ticket id with `=>` for releases.'
     );
   } else {
-    var titleParts = pr.title.match(titlePattern);
+    const titleParts = pr.title.match(titlePattern);
 
     if (!titleParts || titleParts.length < 3) {
       fail('Unexpected PR title parsing error');
     } else {
-      var scope = titleParts[2];
+      const scope = titleParts[2];
 
       if (!scopes.includes(scope)) {
         fail(

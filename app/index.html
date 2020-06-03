@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notepad</title>
+    <meta name="description" content="Simple offline-first text editor" />
+    <meta name="theme-color" content="#2F3BA2" />
+    <link rel="canonical" href="https://barissencan.com/notepad-pwa/" />
+    <link
+      rel="icon"
+      href="/notepad-pwa/images/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="manifest" href="/notepad-pwa/manifest.json" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/notepad-pwa/styles/material.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">Notepad</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="">Open</a>
+            <a class="mdl-navigation__link" href="">Save</a>
+          </nav>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="#scroll-tab-1" class="mdl-layout__tab is-active">New File</a>
+        </div>
+      </header>
+      <!-- Drawer -->
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Notepad</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">Open</a>
+          <a class="mdl-navigation__link" href="">Save</a>
+          <a
+            class="mdl-navigation__link"
+            href="https://github.com/isair/notepad-pwa"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Source Code</a
+          >
+        </nav>
+      </div>
+      <!-- Content -->
+      <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+          <div class="page-content"><!-- TODO: Content --></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/notepad-pwa/scripts/material.min.js"></script>
+    <script src="/notepad-pwa/scripts/app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/notepad-pwa/scripts/service-worker.js')
+            .then((reg) => {
+              console.log('Service worker registered.', reg);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
