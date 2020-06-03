@@ -11,9 +11,7 @@ const filesToCache = [
   'styles/material.min.css',
   'scripts/material.min.js',
   'scripts/app.js',
-]
-  .map((path) => `${rootPath}${path}`)
-  .push('https://fonts.googleapis.com/icon?family=Material+Icons');
+].map((path) => `${rootPath}${path}`);
 
 self.addEventListener('install', (event) => {
   // Cache files.
