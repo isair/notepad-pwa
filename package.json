@@ -2,7 +2,7 @@
   "name": "notepad-pwa",
   "version": "0.1.0",
   "description": "Simple offline-first text editor",
-  "homepage": "https://isair.github.io/notepad-pwa/",
+  "homepage": "https://barissencan.com/notepad-pwa/",
   "scripts": {
     "lint": "eslint ./",
     "serve": "httpserver ./app",
