@@ -1,6 +1,7 @@
 {
   "name": "Notepad",
   "short_name": "Notepad",
+  "scope": "/notepad-pwa/",
   "start_url": "/notepad-pwa/index.html",
   "display": "standalone",
   "theme_color": "#2f3ba2",
