@@ -1,5 +1,5 @@
 module.exports = {
-  '*.{js,json}': 'eslint --fix',
+  '*.{js,json,jsx,vue,ts,tsx}': 'vue-cli-service lint',
   '*.sh': 'shellcheck -x',
-  '*.{md,json,yml,html,css,js}': 'prettier --write',
+  '*.{md,yml,css}': 'prettier --write',
 };

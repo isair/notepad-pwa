@@ -1,12 +1,8 @@
-const dangerImports = require('danger');
-const scopes = require('./commitlint.scopes');
+import { danger, fail, warn } from 'danger';
+import scopes from './commitlint.scopes';
 
 const titlePattern = /^(\w+)\(([a-z-]+)\): (.+)$/;
-const branchPattern = /(?:(feature|hotfix)\/([A-Za-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
-
-const danger = dangerImports.danger;
-const fail = dangerImports.fail;
-const warn = dangerImports.warn;
+const branchPattern = /(?:(feature|hotfix)\/([a-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
 
 const pr = danger.github.pr;
 const isBotPr = pr.user.type === 'Bot';
