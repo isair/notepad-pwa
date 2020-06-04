@@ -1,4 +1,4 @@
-name: Lint
+name: Test
 
 on: [pull_request]
 
@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: rokroskar/workflow-run-cleanup-action@master
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_ACCESS_TOKEN }}'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
 
-  node:
+  all:
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,6 +27,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        run: npm i
+        run: npm install
       - name: Lint
-        run: npm run lint
+        run: npm test
