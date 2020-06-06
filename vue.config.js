@@ -3,7 +3,7 @@ const appName = 'Notepad';
 module.exports = {
   pwa: {
     name: appName,
-    themeColor: '#388E3D',
+    themeColor: '#00796A',
   },
   chainWebpack: config => {
     config.plugin('html').tap(args => {
