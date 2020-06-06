@@ -17,6 +17,14 @@
         </li>
       </ul>
       <a
+        v-if="!isInstalled"
+        class="mdl-navigation__link"
+        href="https://support.google.com/chrome/answer/9658361"
+        target="_blank"
+        rel="noopener noreferrer"
+        >How to Add to Device</a
+      >
+      <a
         class="mdl-navigation__link"
         href="https://github.com/isair/notepad-pwa"
         target="_blank"
@@ -36,6 +44,9 @@ export default Vue.extend({
     onFileOpen: Function,
     onFileSave: Function,
   },
+  data: () => ({
+    isInstalled: window.matchMedia('(display-mode: standalone)').matches,
+  }),
 });
 </script>
 
