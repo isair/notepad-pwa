@@ -31,7 +31,7 @@ export function getName(file: any) {
 }
 
 export async function getText(file: any) {
-  return file.getText();
+  return file.text();
 }
 
 export async function write(handle: any, contents: string) {
