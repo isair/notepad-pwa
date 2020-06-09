@@ -15,6 +15,15 @@
             Save
           </span>
         </li>
+        <li
+          class="mdl-list__item mdl-navigation__link"
+          v-on:click="onFileSaveAs"
+        >
+          <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">redo</i>
+            Save As
+          </span>
+        </li>
       </ul>
       <a
         v-if="!isInstalled"
@@ -43,6 +52,7 @@ export default Vue.extend({
   props: {
     onFileOpen: Function,
     onFileSave: Function,
+    onFileSaveAs: Function,
   },
   data: () => ({
     isInstalled: window.matchMedia('(display-mode: standalone)').matches,
