@@ -1,7 +1,8 @@
 <template>
   <div class="page-content fill">
     <textarea
-      v-model="contents"
+      v-model="content"
+      @input="handleInput"
       class="editor-textarea fill"
       type="text"
     ></textarea>
@@ -14,19 +15,19 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'Editor',
   props: {
-    onChange: Function,
+    value: String,
   },
-  data: function() {
-    return {
-      contents: '',
-    };
+  data: () => ({
+    content: '',
+  }),
+  watch: {
+    value(newValue) {
+      this.content = newValue;
+    },
   },
   methods: {
-    setContents(value: string) {
-      this.contents = value;
-    },
-    getContents() {
-      return this.contents;
+    handleInput() {
+      this.$emit('input', this.content);
     },
   },
 });
@@ -38,4 +39,6 @@ export default Vue.extend({
   height: 100%
 .editor-textarea
   padding: 20px
+  border: none
+  outline: none
 </style>
