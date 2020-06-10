@@ -84,7 +84,7 @@ export default {
     },
     async onFileSave() {
       if (!this.fileHandles[this.activeIndex]) {
-        const handle = this.onFileSaveAs();
+        const handle = await this.onFileSaveAs();
         if (handle) {
           const newHandles = [...this.fileHandles];
           newHandles[this.activeIndex] = handle;
