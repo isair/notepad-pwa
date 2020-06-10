@@ -26,8 +26,8 @@ export async function getFile(handle: any) {
   return handle.getFile();
 }
 
-export function getName(file: any) {
-  return file.name;
+export function getName(fileOrHandle: any) {
+  return fileOrHandle.name;
 }
 
 export async function getText(file: any) {

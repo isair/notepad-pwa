@@ -21,8 +21,8 @@ export default Vue.extend({
     content: '',
   }),
   watch: {
-    value() {
-      this.content = this.value;
+    value(newValue) {
+      this.content = newValue;
     },
   },
   methods: {

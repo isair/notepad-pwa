@@ -10,11 +10,11 @@
       <!-- Tabs -->
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a
-          v-for="(path, index) in filePaths"
+          v-for="(name, index) in fileNames"
           v-bind:key="index"
           href="#scroll-tab-1"
           class="mdl-layout__tab is-active"
-          >New File</a
+          >{{ name }}</a
         >
       </div>
     </header>
@@ -27,7 +27,7 @@
     <!-- Content -->
     <main class="mdl-layout__content">
       <section
-        v-for="(path, index) in filePaths"
+        v-for="(handle, index) in fileHandles"
         v-bind:key="index"
         class="mdl-layout__tab-panel is-active"
         id="scroll-tab-1"
@@ -51,33 +51,44 @@ export default {
     Drawer,
     Editor,
   },
-  data: function() {
-    return {
-      activeIndex: 0,
-      fileHandles: [null],
-      filePaths: [''],
-      fileContents: [''],
-    };
+  data: () => ({
+    activeIndex: 0,
+    fileHandles: [null],
+    fileContents: [''],
+  }),
+  computed: {
+    fileNames() {
+      return this.fileHandles.map(handle =>
+        handle ? fileUtils.getName(handle) : environment.defaultTabTitle
+      );
+    },
   },
   methods: {
     async onFileOpen() {
       if (!fileUtils.checkSupport()) {
         return;
       }
+
       const handle = await fileUtils.choose(false, environment.accepts);
-      this.fileHandles[this.activeIndex] = handle;
+
+      const newHandles = [...this.fileHandles];
+      newHandles[this.activeIndex] = handle;
+      this.fileHandles = newHandles;
+
       const file = await fileUtils.getFile(handle);
-      this.filePaths[this.activeIndex] = fileUtils.getName(file);
-      const contents = await fileUtils.getText(file);
-      this.fileContents[this.activeIndex] = contents;
+      const text = await fileUtils.getText(file);
+
+      const newContents = [...this.fileContents];
+      newContents[this.activeIndex] = text;
+      this.fileContents = newContents;
     },
     async onFileSave() {
       if (!this.fileHandles[this.activeIndex]) {
         const handle = this.onFileSaveAs();
         if (handle) {
-          this.fileHandles[this.activeIndex] = handle;
-          const file = await fileUtils.getFile(handle);
-          this.filePaths[this.activeIndex] = fileUtils.getName(file);
+          const newHandles = [...this.fileHandles];
+          newHandles[this.activeIndex] = handle;
+          this.fileHandles = newHandles;
         }
         return;
       }
