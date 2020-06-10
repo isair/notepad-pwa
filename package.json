@@ -1,6 +1,6 @@
 {
   "name": "notepad-pwa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple offline-first text editor",
   "author": "Baris Sencan <baris.sncn@gmail.com>",
   "homepage": "https://notepad.isair.now.sh/",

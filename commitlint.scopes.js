@@ -6,4 +6,5 @@ module.exports = [
   'deps',
   'dev-deps',
   'app',
+  'release',
 ];
