@@ -1672,12 +1672,12 @@
     webpack "^4.0.0"
     workbox-webpack-plugin "^4.3.1"
 
-"@vue/cli-plugin-router@^4.4.1", "@vue/cli-plugin-router@~4.4.0":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-4.4.1.tgz#07d09df0f4bea816e637da814f578b808f1f93b2"
-  integrity sha512-kCSsJG7pjDvCJDjGtcCI5l0UjmqwNigOR41RkeGSjSUvzV4ArSniXjFqrOmtpMp36S5xCtwtt9MFm/K4fCubkQ==
+"@vue/cli-plugin-router@^4.4.1", "@vue/cli-plugin-router@~4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-4.4.3.tgz#69a07f1d8103b5b748fe5a6651818f562a2ecf19"
+  integrity sha512-rqhM/t0g38amC118kicenlKgqXnTcFQdNk7RWkX1QO6b0WuTIsqUSZ3HTR8K6H1wQwggW1qbTV1gF2mNNlsmnA==
   dependencies:
-    "@vue/cli-shared-utils" "^4.4.1"
+    "@vue/cli-shared-utils" "^4.4.3"
 
 "@vue/cli-plugin-typescript@~4.4.0":
   version "4.4.1"
@@ -1779,10 +1779,10 @@
     webpack-dev-server "^3.11.0"
     webpack-merge "^4.2.2"
 
-"@vue/cli-shared-utils@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.4.1.tgz#930304ade5a9f9bf0d2fd67d9305cad83d04aae1"
-  integrity sha512-teevHgI7XUsKVMOncx3M+6iLjO28woGfRwgUG4hR83moVBHQe5x2OCr2i5t/58bwpv269RD5RYXBQCGtIXuxZw==
+"@vue/cli-shared-utils@^4.4.1", "@vue/cli-shared-utils@^4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.4.3.tgz#0cf7462ffd9eb93a4902b80dcc7f89bf40d4c6c2"
+  integrity sha512-2irCxQ/yY/UvBv5j4XzKSxkX7zcHq3afHMSIsqisp5jzXM//mQY2QrvEooaQtGstCROi6xDe+jnIx23v+gexEA==
   dependencies:
     "@hapi/joi" "^15.0.1"
     chalk "^2.4.2"
