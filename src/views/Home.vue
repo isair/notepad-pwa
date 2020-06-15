@@ -19,20 +19,20 @@
       </div>
     </header>
     <!-- Drawer -->
-    <Drawer
-      v-bind:onFileOpen="onFileOpen"
-      v-bind:onFileSave="onFileSave"
-      v-bind:onFileSaveAs="onFileSaveAs"
+    <drawer
+      :onFileOpen="onFileOpen"
+      :onFileSave="onFileSave"
+      :onFileSaveAs="onFileSaveAs"
     />
     <!-- Content -->
     <main class="mdl-layout__content">
       <section
         v-for="(handle, index) in fileHandles"
-        v-bind:key="index"
+        :key="index"
         class="mdl-layout__tab-panel is-active"
         id="scroll-tab-1"
       >
-        <Editor v-model="fileContents[index]" />
+        <editor v-model="fileContents[index]" />
       </section>
     </main>
   </div>
