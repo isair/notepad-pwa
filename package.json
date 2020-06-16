@@ -9,8 +9,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "run-s test:*",
-    "test:lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint",
+    "test": "run-p --print-label test:*",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --headless"
   },
