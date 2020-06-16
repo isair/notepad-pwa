@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { danger, fail, warn } = require('danger');
-const scopes = require('./commitlint.scopes');
+import { danger, fail, warn } from 'danger';
+import scopes from './commitlint.scopes';
 
 const titlePattern = /^(\w+)\(([a-z-]+)\): (.+)$/;
 const branchPattern = /(?:(feature|hotfix)\/([a-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
