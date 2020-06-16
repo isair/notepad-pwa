@@ -5,8 +5,8 @@ module.exports = {
     name: appName,
     themeColor: '#00796A',
   },
-  chainWebpack: config => {
-    config.plugin('html').tap(args => {
+  chainWebpack: (config) => {
+    config.plugin('html').tap((args) => {
       args[0].title = appName;
       return args;
     });

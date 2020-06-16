@@ -35,5 +35,5 @@ export const productionEnvironment = {
         'sass',
       ],
     },
-  ].map(accept => ({ ...accept, mimeTypes: ['text/plain'] })),
+  ].map((accept) => ({ ...accept, mimeTypes: ['text/plain'] })),
 };

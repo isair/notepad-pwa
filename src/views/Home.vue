@@ -58,7 +58,7 @@ export default {
   }),
   computed: {
     fileNames() {
-      return this.fileHandles.map(handle =>
+      return this.fileHandles.map((handle) =>
         handle ? fileUtils.getName(handle) : environment.defaultTabTitle
       );
     },
