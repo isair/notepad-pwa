@@ -11,14 +11,14 @@ jobs:
     steps:
       - uses: rokroskar/workflow-run-cleanup-action@master
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
 
   test:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.15.1]
+        node-version: [10.19]
 
     steps:
       - uses: actions/checkout@v2
