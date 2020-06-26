@@ -15,11 +15,17 @@
           class="mdl-layout__tab"
           :class="{ 'is-active': index === activeIndex }"
           href="#"
-          @click.prevent="() => onTabClick(index)"
+          @click="() => onTabClick(index)"
         >
-          {{ name }}
+          {{ name }}<span v-if="tabChangeFlags[index]"> *</span>
+          <button
+            class="mdl-button mdl-js-button mdl-button--icon"
+            @click.stop="() => onTabRemove(index)"
+          >
+            <i class="material-icons">close</i>
+          </button>
         </a>
-        <a class="mdl-layout__tab" href="#" @click.prevent="onNewTab">+</a>
+        <a class="mdl-layout__tab" href="#" @click="onTabAdd">+</a>
       </div>
     </header>
     <!-- Drawer -->
@@ -32,7 +38,10 @@
     <!-- Content -->
     <main class="mdl-layout__content">
       <section class="mdl-layout__tab-panel is-active">
-        <editor v-model="fileContents[activeIndex]" />
+        <editor
+          v-model="tabContents[activeIndex]"
+          @input="() => onTabContentChange(activeIndex)"
+        />
       </section>
     </main>
   </div>
@@ -57,7 +66,8 @@ export default Vue.extend({
   data: () => ({
     activeIndex: 0,
     fileHandles: [null],
-    fileContents: [''],
+    tabContents: [''],
+    tabChangeFlags: [false],
     autoSaveTimer: null as number | null,
   }),
   computed: {
@@ -87,9 +97,12 @@ export default Vue.extend({
       const file = await fileUtils.getFile(handle);
       const text = await fileUtils.getText(file);
 
-      const newContents = [...this.fileContents];
+      const newContents = [...this.tabContents];
       newContents[this.activeIndex] = text;
-      this.fileContents = newContents;
+      this.tabContents = newContents;
+      const newFlags = [...this.tabChangeFlags];
+      newFlags[this.activeIndex] = false;
+      this.tabChangeFlags = newFlags;
     },
     async onFileSave(index: number) {
       if (!this.fileHandles[index]) {
@@ -101,21 +114,49 @@ export default Vue.extend({
         }
         return;
       }
-      fileUtils.write(this.fileHandles[index], this.fileContents[index]);
+      await fileUtils.write(this.fileHandles[index], this.tabContents[index]);
+      const newFlags = [...this.tabChangeFlags];
+      newFlags[index] = false;
+      this.tabChangeFlags = newFlags;
     },
     async onFileSaveAs(index: number) {
       const handle = await fileUtils.choose(true, environment.accepts);
       if (handle) {
-        fileUtils.write(handle, this.fileContents[index]);
+        await fileUtils.write(handle, this.tabContents[index]);
+        const newFlags = [...this.tabChangeFlags];
+        newFlags[index] = false;
+        this.tabChangeFlags = newFlags;
         return handle;
       }
     },
     onTabClick(index: number) {
       this.activeIndex = index;
     },
-    onNewTab() {
+    onTabAdd() {
       this.fileHandles = [...this.fileHandles, null];
-      this.fileContents = [...this.fileContents, ''];
+      this.tabContents = [...this.tabContents, ''];
+      this.tabChangeFlags = [...this.tabChangeFlags, false];
+    },
+    async onTabRemove(index: number) {
+      if (this.tabChangeFlags[index]) {
+        const confirmClose = confirm(
+          `"${this.fileNames[index]}" has not been saved. Are you sure you would like to close it?`
+        );
+        if (!confirmClose) return;
+      }
+      // Remove the tab.
+      if (this.fileHandles.length > 1) {
+        this.fileHandles.splice(index, 1);
+        this.tabContents.splice(index, 1);
+        this.tabChangeFlags.splice(index, 1);
+        if (index <= this.activeIndex) {
+          this.activeIndex = index > 0 ? index - 1 : index;
+        }
+      } else {
+        this.fileHandles[0] = null;
+        this.tabContents[0] = '';
+        this.tabChangeFlags[0] = false;
+      }
     },
     onAutoSaveChange(shouldAutoSave: boolean) {
       if (shouldAutoSave) {
@@ -138,6 +179,25 @@ export default Vue.extend({
       if (!this.autoSaveTimer) return;
       clearInterval(this.autoSaveTimer);
     },
+    onTabContentChange(index: number) {
+      if (this.tabChangeFlags[index]) return;
+      const newFlags = [...this.tabChangeFlags];
+      newFlags[index] = true;
+      this.tabChangeFlags = newFlags;
+    },
   },
 });
 </script>
+
+<style lang="stylus" scoped>
+.mdl-layout__tab
+  padding-right: 0 !important
+
+.mdl-layout__tab > .mdl-button
+  opacity: 0.5 !important
+  position: relative
+  bottom: 10px
+
+.mdl-layout__tab > .mdl-button > .material-icons
+  font-size: 16px
+</style>
