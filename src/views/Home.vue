@@ -11,11 +11,15 @@
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a
           v-for="(name, index) in fileNames"
-          v-bind:key="index"
-          href="#scroll-tab-1"
-          class="mdl-layout__tab is-active"
-          >{{ name }}</a
+          :key="index"
+          class="mdl-layout__tab"
+          :class="{ 'is-active': index === activeIndex }"
+          href="#"
+          @click.prevent="onTabClick(index)"
         >
+          {{ name }}
+        </a>
+        <a class="mdl-layout__tab" href="#" @click.prevent="onNewTab">+</a>
       </div>
     </header>
     <!-- Drawer -->
@@ -26,13 +30,8 @@
     />
     <!-- Content -->
     <main class="mdl-layout__content">
-      <section
-        v-for="(handle, index) in fileHandles"
-        :key="index"
-        class="mdl-layout__tab-panel is-active"
-        id="scroll-tab-1"
-      >
-        <editor v-model="fileContents[index]" />
+      <section class="mdl-layout__tab-panel is-active">
+        <editor v-model="fileContents[activeIndex]" />
       </section>
     </main>
   </div>
@@ -103,6 +102,13 @@ export default {
         fileUtils.write(handle, this.fileContents[this.activeIndex]);
         return handle;
       }
+    },
+    onTabClick(index) {
+      this.activeIndex = index;
+    },
+    onNewTab() {
+      this.fileHandles = [...this.fileHandles, null];
+      this.fileContents = [...this.fileContents, ''];
     },
   },
 };
