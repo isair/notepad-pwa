@@ -25,6 +25,21 @@
           </span>
         </li>
       </ul>
+      <ul class="mdl-list">
+        <li class="mdl-list__item mdl-navigation__link">
+          <label
+            class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+            for="checkbox-auto-save"
+          >
+            <input
+              type="checkbox"
+              id="checkbox-auto-save"
+              class="mdl-checkbox__input"
+            />
+            <span class="mdl-checkbox__label">Auto Save</span>
+          </label>
+        </li>
+      </ul>
       <a
         v-if="!isInstalled"
         class="mdl-navigation__link"
