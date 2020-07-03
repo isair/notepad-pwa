@@ -32,6 +32,8 @@
             for="checkbox-auto-save"
           >
             <input
+              v-model="shouldAutoSave"
+              v-on:change="handleShouldAutoSaveChange"
               type="checkbox"
               id="checkbox-auto-save"
               class="mdl-checkbox__input"
@@ -62,16 +64,27 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import checkInstalled from '@/utils/checkInstalled';
+import { StorageKey, getItem, setItem } from '@/utils/storage';
+
 export default Vue.extend({
   name: 'Drawer',
   props: {
     onFileOpen: Function,
     onFileSave: Function,
     onFileSaveAs: Function,
+    onAutoSaveChange: Function,
   },
   data: () => ({
-    isInstalled: window.matchMedia('(display-mode: standalone)').matches,
+    isInstalled: checkInstalled(),
+    shouldAutoSave: getItem<boolean>(StorageKey.shouldAutoSave),
   }),
+  methods: {
+    handleShouldAutoSaveChange(newValue: boolean) {
+      setItem(StorageKey.shouldAutoSave, newValue);
+      this.onAutoSaveChange && this.onAutoSaveChange(newValue);
+    },
+  },
 });
 </script>
 
