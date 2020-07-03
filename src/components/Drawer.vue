@@ -80,9 +80,9 @@ export default Vue.extend({
     shouldAutoSave: getItem<boolean>(StorageKey.shouldAutoSave),
   }),
   methods: {
-    handleShouldAutoSaveChange(newValue: boolean) {
-      setItem(StorageKey.shouldAutoSave, newValue);
-      this.onAutoSaveChange && this.onAutoSaveChange(newValue);
+    handleShouldAutoSaveChange() {
+      setItem(StorageKey.shouldAutoSave, this.shouldAutoSave);
+      this.onAutoSaveChange && this.onAutoSaveChange(this.shouldAutoSave);
     },
   },
 });
