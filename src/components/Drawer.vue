@@ -25,6 +25,23 @@
           </span>
         </li>
       </ul>
+      <ul class="mdl-list">
+        <li class="mdl-list__item mdl-navigation__link">
+          <label
+            class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+            for="checkbox-auto-save"
+          >
+            <input
+              v-model="shouldAutoSave"
+              v-on:change="handleShouldAutoSaveChange"
+              type="checkbox"
+              id="checkbox-auto-save"
+              class="mdl-checkbox__input"
+            />
+            <span class="mdl-checkbox__label">Auto Save</span>
+          </label>
+        </li>
+      </ul>
       <a
         v-if="!isInstalled"
         class="mdl-navigation__link"
@@ -47,16 +64,27 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import checkInstalled from '@/utils/checkInstalled';
+import { StorageKey, getItem, setItem } from '@/utils/storage';
+
 export default Vue.extend({
   name: 'Drawer',
   props: {
     onFileOpen: Function,
     onFileSave: Function,
     onFileSaveAs: Function,
+    onAutoSaveChange: Function,
   },
   data: () => ({
-    isInstalled: window.matchMedia('(display-mode: standalone)').matches,
+    isInstalled: checkInstalled(),
+    shouldAutoSave: getItem<boolean>(StorageKey.shouldAutoSave),
   }),
+  methods: {
+    handleShouldAutoSaveChange() {
+      setItem(StorageKey.shouldAutoSave, this.shouldAutoSave);
+      this.onAutoSaveChange && this.onAutoSaveChange(this.shouldAutoSave);
+    },
+  },
 });
 </script>
 

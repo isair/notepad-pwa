@@ -1,4 +1,5 @@
 export const productionEnvironment = {
+  autoSaveInterval: 3000,
   defaultTabTitle: 'New File',
   accepts: [
     {
