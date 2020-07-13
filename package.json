@@ -5,7 +5,7 @@
   "author": "Baris Sencan <baris.sncn@gmail.com>",
   "homepage": "https://notepad.isair.now.sh/",
   "repository": "https://github.com/isair/notepad-pwa",
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
