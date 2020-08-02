@@ -2,7 +2,6 @@ import { danger, fail, warn } from 'danger';
 import scopes from './commitlint.scopes';
 
 const titlePattern = /^(\w+)\(([a-z-]+)\): (.+)$/;
-const branchPattern = /(?:(feature|hotfix)\/([a-z]{1}[a-z\-0-9.]+)|(release|support|staging)\/[0-9]+\.[0-9]+\.[0-9]+)/;
 
 const pr = danger.github.pr;
 const isBotPr = pr.user.type === 'Bot';
@@ -12,17 +11,10 @@ const isBotPr = pr.user.type === 'Bot';
  */
 
 if (!isBotPr) {
-  // Check branch naming
-  if (!branchPattern.test(pr.head.ref)) {
-    fail(
-      'The branch name needs to be in format: `type/TICKET-1234-description` for types `feature` or `hotfix`. For `release`, `support`, or `staging` the forward slash needs to be followed by a semver version number.'
-    );
-  }
-
   // Check PR title
   if (!titlePattern.test(pr.title)) {
     fail(
-      'The PR title needs to be in format: `type(scope): TICKET-1234 Description`. You can replace ticket id with `=>` for releases.'
+      'The PR title needs to be in format: `type(scope): Description`.'
     );
   } else {
     const titleParts = pr.title.match(titlePattern);
