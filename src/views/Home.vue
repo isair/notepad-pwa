@@ -18,8 +18,11 @@
           @click.prevent="() => onTabClick(index)"
         >
           {{ name }}
+          <span @click="() => onTabRemove(index)"
+            ><i class="material-icons tab-icon">close</i></span
+          >
         </a>
-        <a class="mdl-layout__tab" href="#" @click.prevent="onNewTab">+</a>
+        <a class="mdl-layout__tab" href="#" @click.prevent="onTabAdd">+</a>
       </div>
     </header>
     <!-- Drawer -->
@@ -101,21 +104,38 @@ export default Vue.extend({
         }
         return;
       }
-      fileUtils.write(this.fileHandles[index], this.fileContents[index]);
+      await fileUtils.write(this.fileHandles[index], this.fileContents[index]);
     },
     async onFileSaveAs(index: number) {
       const handle = await fileUtils.choose(true, environment.accepts);
       if (handle) {
-        fileUtils.write(handle, this.fileContents[index]);
+        await fileUtils.write(handle, this.fileContents[index]);
         return handle;
       }
     },
     onTabClick(index: number) {
       this.activeIndex = index;
     },
-    onNewTab() {
+    onTabAdd() {
       this.fileHandles = [...this.fileHandles, null];
       this.fileContents = [...this.fileContents, ''];
+    },
+    async onTabRemove(index: number) {
+      // Ask to save an unsaved new file.
+      // TODO: Ask to save a changed file as well.
+      if (!!this.fileHandles[index] && !!this.fileContents[index].trim()) {
+        await this.onFileSave(index);
+      }
+      if (this.fileHandles.length > 1) {
+        this.fileHandles.splice(index, 1);
+        this.fileContents.splice(index, 1);
+        if (index <= this.activeIndex) {
+          this.activeIndex = index > 0 ? index - 1 : index;
+        }
+      } else {
+        this.fileHandles[0] = null;
+        this.fileContents[0] = '';
+      }
     },
     onAutoSaveChange(shouldAutoSave: boolean) {
       if (shouldAutoSave) {
@@ -141,3 +161,11 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="stylus" scoped>
+.tab-icon
+  width: 16px;
+  height: 16px;
+  margin: auto 0;
+  z-index: 1000;
+</style>
