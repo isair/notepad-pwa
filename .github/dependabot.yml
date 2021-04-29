@@ -1,0 +1,41 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: eslint
+    versions:
+    - 7.18.0
+    - 7.19.0
+    - 7.20.0
+    - 7.21.0
+    - 7.22.0
+    - 7.23.0
+    - 7.24.0
+  - dependency-name: commitlint
+    versions:
+    - 11.0.0
+    - 12.0.1
+  - dependency-name: "@commitlint/config-conventional"
+    versions:
+    - 11.0.0
+    - 12.0.0
+    - 12.0.1
+  - dependency-name: "@vue/cli-plugin-pwa"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-vuex"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-router"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-e2e-cypress"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-service"
+    versions:
+    - 4.5.11
