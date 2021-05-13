@@ -41,7 +41,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^1.0.3",
-    "commitlint": "^9.0.1",
+    "commitlint": "^12.1.4",
     "cross-env": "^7.0.2",
     "danger": "^10.2.0",
     "eslint": "^7.2.0",
