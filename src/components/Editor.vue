@@ -38,6 +38,7 @@ export default Vue.extend({
   width: 100%
   height: 100%
 .editor-textarea
+  box-sizing: border-box
   padding: 20px
   border: none
   outline: none
