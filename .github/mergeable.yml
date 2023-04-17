@@ -1,0 +1,25 @@
+version: 2
+mergeable:
+  - when: pull_request.opened, pull_request.edited, pull_request.synchronize
+    name: PR title check
+    validate:
+      - do: title
+        must_include:
+          regex: '(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\(multi|config|github|script|deps|dev-deps|app|release\): [A-Z].+$'
+    fail:
+      - do: checks
+      - do: comment
+        payload:
+          body: Pull request title needs to match the format enforced for commit messages.
+
+  - when: pull_request.opened, pull_request.assigned, pull_request.unassigned, pull_request.synchronize
+    name: PR assignee check
+    validate:
+      - do: assignee
+        min:
+          count: 1
+    fail:
+      - do: checks
+      - do: comment
+        payload:
+          body: Pull request needs to have an assignee, which is the person who will merge. This is usually the author to prevent merging PRs early by accident.
