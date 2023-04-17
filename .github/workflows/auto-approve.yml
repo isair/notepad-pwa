@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
         with:
-          github-token: '${{ secrets.APPROVER_TOKEN }}'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
