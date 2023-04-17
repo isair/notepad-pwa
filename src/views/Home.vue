@@ -85,6 +85,12 @@ export default Vue.extend({
     this.startAutoSaver();
   },
   methods: {
+    createNewTab(handle = null, content = '') {
+      this.fileHandles = [...this.fileHandles, handle];
+      this.tabContents = [...this.tabContents, content];
+      this.tabChangeFlags = [...this.tabChangeFlags, false];
+      this.activeIndex = this.fileHandles.length - 1;
+    },
     async onFileOpen() {
       if (!fileUtils.checkSupport()) {
         return;
@@ -94,14 +100,7 @@ export default Vue.extend({
       const file = await fileUtils.getFile(handle);
       const text = await fileUtils.getText(file);
 
-      const newHandles = [...this.fileHandles, handle];
-      this.fileHandles = newHandles;
-      const newContents = [...this.tabContents, text];
-      this.tabContents = newContents;
-      const newFlags = [...this.tabChangeFlags, false];
-      this.tabChangeFlags = newFlags;
-
-      this.activeIndex = newHandles.length - 1;
+      this.createNewTab(handle, text);
     },
     async onFileSave(index: number) {
       if (!fileUtils.checkSupport()) {
@@ -143,12 +142,7 @@ export default Vue.extend({
       this.activeIndex = index;
     },
     onTabAdd() {
-      this.fileHandles = [...this.fileHandles, null];
-      this.tabContents = [...this.tabContents, ''];
-      this.tabChangeFlags = [...this.tabChangeFlags, false];
-
-      // Set the activeIndex to the newly added tab's index
-      this.activeIndex = this.fileHandles.length - 1;
+      this.createNewTab();
     },
     async onTabRemove(index: number) {
       if (this.tabChangeFlags[index]) {
