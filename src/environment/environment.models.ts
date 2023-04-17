@@ -1,7 +1,7 @@
-import { Accepts } from '@/utils/file';
+import { FileType } from '@/utils/file';
 
 export interface Environment {
   autoSaveInterval: number;
   defaultTabTitle: string;
-  accepts: Accepts[];
+  fileTypes: FileType[];
 }

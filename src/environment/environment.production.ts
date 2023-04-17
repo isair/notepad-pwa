@@ -1,40 +1,53 @@
-export const productionEnvironment = {
+import { Environment } from './environment.models';
+
+export const productionEnvironment: Environment = {
   autoSaveInterval: 3000,
   defaultTabTitle: 'New File',
-  accepts: [
+  fileTypes: [
     {
       description: 'Text',
-      extensions: ['txt'],
+      accept: {
+        'text/plain': ['.txt'],
+      },
     },
     {
       description: 'Markdown',
-      extensions: ['md'],
+      accept: {
+        'text/markdown': ['.md'],
+      },
     },
     {
       description: 'Data',
-      extensions: ['json', 'yml', 'xml', 'csv'],
+      accept: {
+        'application/json': ['.json'],
+        'text/yaml': ['.yml'],
+        'text/xml': ['.xml'],
+        'text/csv': ['.csv'],
+      },
     },
     {
       description: 'Code',
-      extensions: [
-        'vue',
-        'js',
-        'jsx',
-        'ts',
-        'tsx',
-        'c',
-        'cpp',
-        'h',
-        'm',
-        'mm',
-        'swift',
-        'java',
-        'html',
-        'css',
-        'scss',
-        'styl',
-        'sass',
-      ],
+      accept: {
+        'text/plain': [
+          '.vue',
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+          '.c',
+          '.cpp',
+          '.h',
+          '.m',
+          '.mm',
+          '.swift',
+          '.java',
+          '.html',
+          '.css',
+          '.scss',
+          '.styl',
+          '.sass',
+        ],
+      },
     },
-  ].map((accept) => ({ ...accept, mimeTypes: ['text/plain'] })),
+  ],
 };

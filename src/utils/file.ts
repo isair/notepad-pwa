@@ -1,40 +1,50 @@
-export interface Accepts {
+export interface FileType {
   description: string;
-  extensions: string[];
-  mimeTypes: string[];
+  accept: {
+    [key: string]: string[];
+  };
 }
 
 export function checkSupport() {
-  if (!(window as any).chooseFileSystemEntries) {
-    window.alert(
-      'Please go to chrome://flags and enable "Native File System API"'
-    );
+  if (!('showOpenFilePicker' in window)) {
+    window.alert('Your browser does not support the File System Access API.');
     return false;
   }
   return true;
 }
 
-export async function choose(save = false, accepts: Accepts[] = []) {
-  const opts = {
-    type: save ? 'save-file' : undefined,
-    accepts: accepts ? accepts : undefined,
-  };
-  return await (window as any).chooseFileSystemEntries(opts);
+export async function choose(save = false, types: FileType[] = []) {
+  if (save) {
+    return await (window as any).showSaveFilePicker({ types });
+  } else {
+    const [fileHandle] = await (window as any).showOpenFilePicker({ types });
+    return fileHandle;
+  }
 }
 
 export async function getFile(handle: any) {
-  return handle.getFile();
+  return await handle.getFile();
 }
 
-export function getName(fileOrHandle: any) {
-  return fileOrHandle.name;
+export function getName(handle: any): string {
+  return handle.name;
 }
 
-export async function getText(file: any) {
-  return file.text();
+export async function getText(file: File): Promise<string> {
+  const reader = new FileReader();
+  return new Promise<string>((resolve, reject) => {
+    reader.onerror = () => {
+      reader.abort();
+      reject(new DOMException('Error reading the file.'));
+    };
+    reader.onload = () => {
+      resolve(reader.result as string);
+    };
+    reader.readAsText(file);
+  });
 }
 
-export async function write(handle: any, contents: string) {
+export async function write(handle: any, contents: string): Promise<void> {
   const writable = await handle.createWritable();
   await writable.write(contents);
   await writable.close();

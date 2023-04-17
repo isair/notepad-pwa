@@ -13,7 +13,7 @@
           v-for="(name, index) in fileNames"
           :key="index"
           class="mdl-layout__tab"
-          :class="{ 'is-active': index === activeIndex }"
+          :class="{ 'is-active': index === activeIndex, hide: index === 0 }"
           href="#"
           @click="() => onTabClick(index)"
         >
@@ -39,6 +39,7 @@
     <main class="mdl-layout__content">
       <section class="mdl-layout__tab-panel is-active">
         <editor
+          :class="{ hide: activeIndex === 0 }"
           v-model="tabContents[activeIndex]"
           @input="() => onTabContentChange(activeIndex)"
         />
@@ -88,22 +89,24 @@ export default Vue.extend({
         return;
       }
 
-      const handle = await fileUtils.choose(false, environment.accepts);
-
-      const newHandles = [...this.fileHandles];
-      this.fileHandles = newHandles;
-
+      const handle = await fileUtils.choose(false, environment.types);
       const file = await fileUtils.getFile(handle);
       const text = await fileUtils.getText(file);
 
-      const newContents = [...this.tabContents];
-      newContents[this.activeIndex] = text;
+      const newHandles = [...this.fileHandles, handle];
+      this.fileHandles = newHandles;
+      const newContents = [...this.tabContents, text];
       this.tabContents = newContents;
-      const newFlags = [...this.tabChangeFlags];
-      newFlags[this.activeIndex] = false;
+      const newFlags = [...this.tabChangeFlags, false];
       this.tabChangeFlags = newFlags;
+
+      this.activeIndex = newHandles.length - 1;
     },
     async onFileSave(index: number) {
+      if (!fileUtils.checkSupport()) {
+        return;
+      }
+
       if (!this.fileHandles[index]) {
         const handle = await this.onFileSaveAs(index);
         if (handle) {
@@ -119,7 +122,11 @@ export default Vue.extend({
       this.tabChangeFlags = newFlags;
     },
     async onFileSaveAs(index: number) {
-      const handle = await fileUtils.choose(true, environment.accepts);
+      if (!fileUtils.checkSupport()) {
+        return;
+      }
+
+      const handle = await fileUtils.choose(true, environment.fileTypes);
       if (handle) {
         await fileUtils.write(handle, this.tabContents[index]);
         const newHandles = [...this.fileHandles];
@@ -203,4 +210,7 @@ export default Vue.extend({
 
 .mdl-layout__tab > .mdl-button > .material-icons
   font-size: 16px
+
+.hide
+  display: none
 </style>
