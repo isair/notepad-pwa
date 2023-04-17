@@ -9,7 +9,11 @@
             Open
           </span>
         </li>
-        <li class="mdl-list__item mdl-navigation__link" v-on:click="onFileSave">
+        <li
+          class="mdl-list__item mdl-navigation__link"
+          :class="{ disabled: !areAnyFilesOpen }"
+          v-on:click="onFileSave"
+        >
           <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">save</i>
             Save
@@ -17,6 +21,7 @@
         </li>
         <li
           class="mdl-list__item mdl-navigation__link"
+          :class="{ disabled: !areAnyFilesOpen }"
           v-on:click="onFileSaveAs"
         >
           <span class="mdl-list__item-primary-content">
@@ -70,6 +75,7 @@ import { StorageKey, getItem, setItem } from '@/utils/storage';
 export default Vue.extend({
   name: 'Drawer',
   props: {
+    areAnyFilesOpen: Boolean,
     onFileOpen: Function,
     onFileSave: Function,
     onFileSaveAs: Function,
@@ -91,4 +97,8 @@ export default Vue.extend({
 <style lang="stylus" scoped>
 .mdl-list__item
   cursor: pointer
+
+.disabled
+  pointer-events: none
+  opacity: 0.5
 </style>

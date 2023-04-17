@@ -30,6 +30,7 @@
     </header>
     <!-- Drawer -->
     <drawer
+      :areAnyFilesOpen="fileHandles.length > 1"
       :onFileOpen="onFileOpen"
       :onFileSave="() => onFileSave(activeIndex)"
       :onFileSaveAs="() => onFileSaveAs(activeIndex)"
@@ -89,7 +90,7 @@ export default Vue.extend({
         return;
       }
 
-      const handle = await fileUtils.choose(false, environment.types);
+      const handle = await fileUtils.choose(false, environment.fileTypes);
       const file = await fileUtils.getFile(handle);
       const text = await fileUtils.getText(file);
 
