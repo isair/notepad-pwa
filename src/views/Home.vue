@@ -146,6 +146,9 @@ export default Vue.extend({
       this.fileHandles = [...this.fileHandles, null];
       this.tabContents = [...this.tabContents, ''];
       this.tabChangeFlags = [...this.tabChangeFlags, false];
+
+      // Set the activeIndex to the newly added tab's index
+      this.activeIndex = this.fileHandles.length - 1;
     },
     async onTabRemove(index: number) {
       if (this.tabChangeFlags[index]) {
