@@ -7,4 +7,6 @@ module.exports = [
   'dev-deps',
   'app',
   'release',
+  'unit',
+  'e2e',
 ];
