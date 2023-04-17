@@ -171,6 +171,7 @@ export default Vue.extend({
         this.fileHandles.forEach((handle, index) => {
           // Only auto save a tab if it has an associated file.
           if (!handle) return;
+          if (!this.tabChangeFlags[index]) return; // Skip unchanged tabs.
           this.onFileSave(index);
         });
       }, environment.autoSaveInterval);
