@@ -91,7 +91,6 @@ export default Vue.extend({
       const handle = await fileUtils.choose(false, environment.accepts);
 
       const newHandles = [...this.fileHandles];
-      newHandles[this.activeIndex] = handle;
       this.fileHandles = newHandles;
 
       const file = await fileUtils.getFile(handle);
@@ -123,6 +122,9 @@ export default Vue.extend({
       const handle = await fileUtils.choose(true, environment.accepts);
       if (handle) {
         await fileUtils.write(handle, this.tabContents[index]);
+        const newHandles = [...this.fileHandles];
+        newHandles[index] = handle;
+        this.fileHandles = newHandles;
         const newFlags = [...this.tabChangeFlags];
         newFlags[index] = false;
         this.tabChangeFlags = newFlags;
