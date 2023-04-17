@@ -2,17 +2,11 @@ name: Test
 
 on: [pull_request]
 
-env:
-  IS_CI: true
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  cancel-previous:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: rokroskar/workflow-run-cleanup-action@master
-        env:
-          GITHUB_TOKEN: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-
   test:
     runs-on: ubuntu-latest
 
