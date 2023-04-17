@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Simple offline-first text editor",
   "author": "Baris Sencan <baris.sncn@gmail.com>",
-  "homepage": "https://notepad.isair.now.sh/",
+  "homepage": "https://notepad-pwa.vercel.app/",
   "repository": "https://github.com/isair/notepad-pwa",
   "license": "GPL-3.0-only",
   "scripts": {
